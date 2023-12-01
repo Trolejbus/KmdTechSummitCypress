@@ -1,0 +1,62 @@
+<div class="p-8">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="w-full max-w-xl mx-auto">
+        <h1 class="text-xl mb-2">Create New Application</h1>
+        <mat-form-field class="w-full">
+            <mat-label>Reference No</mat-label>
+            <input formControlName="referenceNo" matInput placeholder="ex. 000-0001">
+        </mat-form-field>
+        <div class="flex gap-4">
+            <mat-form-field class="flex-1">
+                <mat-label>Applicant Name</mat-label>
+                <input formControlName="applicantName" matInput placeholder="ex. John">
+            </mat-form-field>
+            <mat-form-field class="flex-1">
+                <mat-label>Applicant Surname</mat-label>
+                <input formControlName="applicantSurname" matInput placeholder="ex. Doe">
+            </mat-form-field>
+        </div>
+        <div class="flex gap-4">
+            <mat-form-field class="flex-1">
+                <mat-label>Applicant Phone</mat-label>
+                <input formControlName="applicantPhone" matInput placeholder="ex. 678-123-456">
+            </mat-form-field>
+            <mat-form-field class="flex-1">
+                <mat-label>Applicant Email</mat-label>
+                <input formControlName="applicantEmail" matInput placeholder="ex. applicant@example.com">
+            </mat-form-field>
+        </div>
+        <mat-form-field class="w-full">
+            <mat-label>Loan Amount</mat-label>
+            <input formControlName="loanAmount" matInput placeholder="ex. 1.000.000" type="number">
+            <div matSuffix class="w-12 text-center">§</div>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Monthly Payment Amount</mat-label>
+            <input formControlName="monthlyPaymentAmount" matInput placeholder="ex. 1.000.000" type="number">
+            <div matSuffix class="w-12 text-center">§</div>
+        </mat-form-field>
+        <mat-form-field class="w-full">
+            <mat-label>Initial Payment</mat-label>
+            <input formControlName="initialPayment" matInput placeholder="ex. 1.000.000" type="number">
+            <div matSuffix class="w-12 text-center">§</div>
+        </mat-form-field>
+        <div>
+            <mat-label>Type</mat-label>
+            <mat-radio-group formControlName="type" class="flex flex-col">
+                <mat-radio-button value="Leasing">Rent</mat-radio-button>
+                <mat-radio-button value="Rent">Leasing</mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <div class="flex justify-end">
+            <button
+                type="submit"
+                mat-flat-button
+                color="primary"
+                [disabled]="form.disabled"
+            >
+                <i class="ri-file-add-line"></i> Submit
+            </button>
+        </div>
+        
+    </form>
+</div>

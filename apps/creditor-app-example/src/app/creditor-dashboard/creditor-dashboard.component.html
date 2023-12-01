@@ -1,0 +1,27 @@
+<div class="h-96 p-8">
+    <h1 class="text-xl mb-2">Application's list</h1>
+    <div class="flex text-gray-400 text-sm">
+        <div class="w-16 text-center">Index</div>
+        <div class="w-48">ReferenceNo</div>
+        <div>Applicant Name</div>
+        <div class="ml-auto mr-4 w-24">Actions</div>
+    </div>
+    <div class="border-sky-900 border-solid border-t border-b mb-2">
+        <div class="flex h-12 items-center [&:not(:last-child)]:border-b border-solid border-gray-300" *ngFor="let case of (cases$ | async); let index = index;">
+            <div class="w-16 text-center">{{ index }}</div>
+            <div class="w-48">{{ case.referenceNo }}</div>
+            <div>{{ case.applicantName }}</div>
+            <div class="ml-auto mr-4 flex gap-4 w-24">
+                <i class="ri-pencil-line text-sky-900 hover:bg-sky-900 hover:text-white rounded-full w-6 h-6 flex items-center justify-center cursor-pointer"></i>
+                <i class="ri-delete-bin-line text-sky-900 hover:bg-sky-900 hover:text-white rounded-full w-6 h-6 flex items-center justify-center cursor-pointer"></i>
+            </div>
+        </div>
+    </div>
+    <button
+        class="bg-sky-900 text-white cursor-pointer px-8 py-2 ml-auto block hover:bg-sky-700"
+        [routerLink]="['/creditor-app/form']"
+    >
+        <i class="ri-file-add-line"></i> Add Application
+    </button>
+    
+</div>

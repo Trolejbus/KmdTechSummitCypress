@@ -1,0 +1,36 @@
+{
+  "name": "creditor-app-lib",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/creditor-app-lib/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/creditor-app-lib",
+        "main": "libs/creditor-app-lib/src/index.ts",
+        "tsConfig": "libs/creditor-app-lib/tsconfig.lib.json",
+        "assets": ["libs/creditor-app-lib/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/creditor-app-lib/**/*.ts",
+          "libs/creditor-app-lib/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/creditor-app-lib/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

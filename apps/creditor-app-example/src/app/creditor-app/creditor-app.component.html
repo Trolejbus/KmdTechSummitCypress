@@ -1,0 +1,14 @@
+<div class="container mx-auto shadow-md">
+    <div class="bg-sky-900 text-white h-24 shadow-md relative flex items-center px-10 py-2">
+        <div class="font-bold text-3xl cursor-pointer" [routerLink]="['./']">Creditor<span class="text-orange-500">App</span></div>
+        <div class="ml-auto text-xl flex gap-4">
+            <i class="ri-search-eye-line cursor-pointer"></i>
+            <i class="ri-notification-3-line cursor-pointer"></i>
+            <i class="ri-chat-4-line cursor-pointer"></i>
+            <i class="ri-user-2-line cursor-pointer"></i>
+        </div>
+    </div>
+    <div class="bg-white">
+        <router-outlet></router-outlet>
+    </div>
+</div>

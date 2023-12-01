@@ -1,0 +1,70 @@
+{
+  "name": "creditor-app-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/creditor-app-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/esbuild:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "platform": "node",
+        "outputPath": "dist/apps/creditor-app-api",
+        "format": ["cjs"],
+        "bundle": false,
+        "main": "apps/creditor-app-api/src/main.ts",
+        "tsConfig": "apps/creditor-app-api/tsconfig.app.json",
+        "assets": ["apps/creditor-app-api/src/assets"],
+        "generatePackageJson": true,
+        "esbuildOptions": {
+          "sourcemap": true,
+          "outExtension": {
+            ".js": ".js"
+          }
+        }
+      },
+      "configurations": {
+        "development": {},
+        "production": {
+          "esbuildOptions": {
+            "sourcemap": false,
+            "outExtension": {
+              ".js": ".js"
+            }
+          }
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "creditor-app-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "creditor-app-api:build:development"
+        },
+        "production": {
+          "buildTarget": "creditor-app-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/creditor-app-api/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/creditor-app-api/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
