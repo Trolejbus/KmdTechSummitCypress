@@ -1,0 +1,95 @@
+<div class="h-screen flex">
+    <div class="mx-auto w-96 my-12 bg-white shadow-lg">
+        <mat-vertical-stepper [linear]="true" #stepper>
+            <mat-step [editable]="false" [completed]="step1Completed">
+                <ng-template matStepLabel>Provide base data</ng-template>
+                <form>
+                    <mat-form-field class="flex-1">
+                        <mat-label>Social Security Number</mat-label>
+                        <input matInput placeholder="ex. 12345678">
+                    </mat-form-field>
+                    <div class="mb-4">
+                        <mat-checkbox>Are you married?</mat-checkbox>
+                    </div>
+                    <mat-form-field class="flex-1">
+                        <mat-label>What is your address?</mat-label>
+                        <input matInput placeholder="ex. Rohan street 1">
+                    </mat-form-field>
+                    <mat-form-field class="flex-1">
+                        <mat-label>How old are you?</mat-label>
+                        <input matInput placeholder="ex. 27" type="number">
+                    </mat-form-field>
+                    <mat-form-field class="flex-1">
+                        <mat-label>What is your birth city?</mat-label>
+                        <input matInput placeholder="ex. Warsaw">
+                    </mat-form-field>
+                    <mat-form-field class="flex-1">
+                        <mat-label>What is your nationality?</mat-label>
+                        <input matInput placeholder="ex. Rohan citizen">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Favourite club?</mat-label>
+                        <mat-select>
+                            <mat-option value="c1">Arka Gdynia</mat-option>
+                            <mat-option value="c2">Radomiak Radom</mat-option>
+                            <mat-option value="c3">Legia</mat-option>
+                            <mat-option value="c4">Barcelona</mat-option>
+                            <mat-option value="c5">Real Madryt</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-label>Favourite language?</mat-label>
+                        <mat-select>
+                            <mat-option value="c1">C#</mat-option>
+                            <mat-option value="c2">JS</mat-option>
+                            <mat-option value="c3">TS</mat-option>
+                            <mat-option value="c4">Java</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="example-form-field">
+                        <mat-label>Grunwald battle date?</mat-label>
+                        <input matInput [matDatepicker]="datepicker">
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datepicker>
+                          <mat-datepicker-actions>
+                            <button mat-button matDatepickerCancel>Cancel</button>
+                            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                          </mat-datepicker-actions>
+                        </mat-datepicker>
+                      </mat-form-field>
+                    <div>
+                        <button mat-flat-button color="primary" (click)="goNext()">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [editable]="false">
+                <ng-template matStepLabel>Additional data</ng-template>
+                <form>
+                    <mat-form-field class="flex-1">
+                        <mat-label>Children count</mat-label>
+                        <input matInput placeholder="ex. 2">
+                    </mat-form-field>
+                    <mat-form-field class="flex-1">
+                        <mat-label>Cars count</mat-label>
+                        <input matInput placeholder="ex. 1">
+                    </mat-form-field>
+                </form>
+                <div>
+                    <button mat-flat-button color="primary" matStepperNext>Next</button>
+                </div>
+            </mat-step>
+            <mat-step [editable]="false" [completed]="step3Completed">
+                <ng-template matStepLabel>Consents</ng-template>
+                <div class="mb-2">
+                    <button mat-flat-button color="primary" (click)="step3Completed = true">Approve Psd2 Consent</button>
+                </div>
+                <button mat-flat-button color="primary" matStepperNext>Next</button>
+            </mat-step>
+            <mat-step [editable]="false">
+                <ng-template matStepLabel>Finalize</ng-template>
+                <div class="text-lg text-gray-600 text-center"><i class="ri-verified-badge-line block text-6xl my-8"></i> Thank you for filling your data. We will contact you soon.</div>
+            </mat-step>
+        </mat-vertical-stepper>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,6 +28,7 @@ import { CreateApplicationDto, LeasingType } from '@creditor-app-example/credito
     ApplicationFormService,
   ],
   templateUrl: './application-form.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ApplicationFormComponent {
 
@@ -56,12 +57,11 @@ export class ApplicationFormComponent {
     const formValue = this.form.getRawValue();
     this.form.disable();
     const dto = formValue as CreateApplicationDto;
-    console.log(dto);
-
-    /*this.service.create({} as any).pipe(
-      catchError(() => { this.form.enable(); return NEVER; }),
+    this.service.create(dto).pipe(
+      catchError((err) => { console.log(err); this.form.enable(); return NEVER; }),
     ).subscribe(() => {
+      console.log('test');
       this.router.navigate(['creditor-app']);
-    });*/
+    });
   }
 }

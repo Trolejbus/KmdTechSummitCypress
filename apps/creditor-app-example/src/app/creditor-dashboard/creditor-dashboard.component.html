@@ -6,8 +6,12 @@
         <div>Applicant Name</div>
         <div class="ml-auto mr-4 w-24">Actions</div>
     </div>
-    <div class="border-sky-900 border-solid border-t border-b mb-2">
-        <div class="flex h-12 items-center [&:not(:last-child)]:border-b border-solid border-gray-300" *ngFor="let case of (cases$ | async); let index = index;">
+    <div class="border-sky-900 border-solid border-t border-b mb-2" *ngIf="(cases$ | async) as cases">
+        <div
+            class="flex h-12 items-center [&:not(:last-child)]:border-b border-solid border-gray-300"
+            *ngFor="let case of cases; let index = index;"
+            [routerLink]="['/applicant-app', index]"
+        >
             <div class="w-16 text-center">{{ index }}</div>
             <div class="w-48">{{ case.referenceNo }}</div>
             <div>{{ case.applicantName }}</div>
@@ -15,6 +19,9 @@
                 <i class="ri-pencil-line text-sky-900 hover:bg-sky-900 hover:text-white rounded-full w-6 h-6 flex items-center justify-center cursor-pointer"></i>
                 <i class="ri-delete-bin-line text-sky-900 hover:bg-sky-900 hover:text-white rounded-full w-6 h-6 flex items-center justify-center cursor-pointer"></i>
             </div>
+        </div>
+        <div class="h-32 flex items-center justify-center text-2xl text-gray-400" *ngIf="cases.length === 0">
+            <i class="ri-error-warning-line mr-2"></i> No Items
         </div>
     </div>
     <button
