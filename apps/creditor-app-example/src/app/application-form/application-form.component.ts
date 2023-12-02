@@ -60,7 +60,6 @@ export class ApplicationFormComponent {
     this.service.create(dto).pipe(
       catchError((err) => { console.log(err); this.form.enable(); return NEVER; }),
     ).subscribe(() => {
-      console.log('test');
       this.router.navigate(['creditor-app']);
     });
   }
