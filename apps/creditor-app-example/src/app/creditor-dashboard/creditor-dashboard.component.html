@@ -10,7 +10,7 @@
         <div
             class="flex h-12 items-center [&:not(:last-child)]:border-b border-solid border-gray-300"
             *ngFor="let case of cases; let index = index;"
-            [routerLink]="['/applicant-app', index]"
+            [routerLink]="['/applicant-app', case.id]"
         >
             <div class="w-16 text-center">{{ index }}</div>
             <div class="w-48">{{ case.referenceNo }}</div>

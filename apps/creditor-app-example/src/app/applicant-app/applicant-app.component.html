@@ -1,7 +1,10 @@
 <div class="h-screen flex">
     <div class="mx-auto w-96 my-12 bg-white shadow-lg">
-        <mat-vertical-stepper [linear]="true" #stepper>
-            <mat-step [editable]="false" [completed]="step1Completed">
+        <div *ngIf="loading()" class="h-full flex justify-center items-center">
+            <mat-spinner></mat-spinner>
+        </div>
+        <mat-vertical-stepper *ngIf="!loading()" [linear]="false" #stepper [selectedIndex]="stepsCompleted()">
+            <mat-step [editable]="false" [completed]="stepsCompleted() >= 1">
                 <ng-template matStepLabel>Provide base data</ng-template>
                 <form>
                     <mat-form-field class="flex-1">
@@ -63,7 +66,7 @@
                     </div>
                 </form>
             </mat-step>
-            <mat-step [editable]="false">
+            <mat-step [editable]="false" [completed]="stepsCompleted() >= 2">
                 <ng-template matStepLabel>Additional data</ng-template>
                 <form>
                     <mat-form-field class="flex-1">
@@ -76,15 +79,18 @@
                     </mat-form-field>
                 </form>
                 <div>
-                    <button mat-flat-button color="primary" matStepperNext>Next</button>
+                    <button mat-flat-button color="primary" matStepperNext (click)="goNext()">Next</button>
                 </div>
             </mat-step>
-            <mat-step [editable]="false" [completed]="step3Completed">
+            <mat-step [editable]="false" [completed]="stepsCompleted() >= 3">
                 <ng-template matStepLabel>Consents</ng-template>
-                <div class="mb-2">
-                    <button mat-flat-button color="primary" (click)="step3Completed = true">Approve Psd2 Consent</button>
+                <div *ngIf="!consentError()" class="mb-2" >
+                    <button mat-flat-button color="primary" [disabled]="consented()" (click)="submitConsent()">Approve Psd2 Consent</button>
                 </div>
-                <button mat-flat-button color="primary" matStepperNext>Next</button>
+                <div *ngIf="consentError()">
+                    <div class="text-lg text-gray-600 text-center"><i class="ri-error-warning-line block text-6xl my-8"></i> There was an error with proceeding your consent. You can still continue.</div>
+                </div>
+                <button mat-flat-button color="primary" (click)="goNext()">Next</button>
             </mat-step>
             <mat-step [editable]="false">
                 <ng-template matStepLabel>Finalize</ng-template>
@@ -93,3 +99,4 @@
         </mat-vertical-stepper>
     </div>
 </div>
+ n 

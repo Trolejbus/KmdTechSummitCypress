@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, map } from "rxjs";
+import { Observable } from "rxjs";
 import { CreateApplicationDto } from "@creditor-app-example/creditor-app-lib";
 import { HttpClient } from "@angular/common/http";
 

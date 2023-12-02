@@ -11,4 +11,5 @@ export interface ApplicationDto {
     monthlyPaymentAmount: number;
     initialPayment: number;
     type: LeasingType;
+    status: number;
 }

@@ -21,12 +21,27 @@ app.get('/applications', (req, res) => {
   res.send(applications);
 });
 
+app.get('/applications/:id', (req, res) => {
+  res.send(applications.find(a => a.id.toString() === req.params.id));
+});
+
 app.post('/applications', bodyParser.json(), (req, res) => {
   const dto = req.body as CreateApplicationDto;
   applications.push(({
     id: applications.length + 1,
     ...dto,
+    status: 0,
   }));
+  res.end();
+});
+
+app.put('/applications/:id', (req, res) => {
+  const application = applications.find(a => a.id.toString() === req.params.id);
+  application.status++;
+  res.end();
+});
+
+app.put('/applications/:id/init3rdParty', (req, res) => {
   res.end();
 });
 
