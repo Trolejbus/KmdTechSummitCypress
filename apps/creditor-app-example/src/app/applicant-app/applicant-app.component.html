@@ -1,40 +1,46 @@
-<div class="h-screen flex">
+<div class="h-screen flex" data-cy="ApplicantApp">
     <div class="mx-auto w-96 my-12 bg-white shadow-lg">
         <div *ngIf="loading()" class="h-full flex justify-center items-center">
             <mat-spinner></mat-spinner>
         </div>
-        <mat-vertical-stepper *ngIf="!loading()" [linear]="false" #stepper [selectedIndex]="stepsCompleted()">
-            <mat-step [editable]="false" [completed]="stepsCompleted() >= 1">
+        <mat-vertical-stepper
+            *ngIf="!loading()"
+            [linear]="false"
+            #stepper
+            [selectedIndex]="stepsCompleted()"
+            (selectedIndexChange)="selectedIndexChange($event)"
+        >
+            <mat-step  [editable]="false" [completed]="stepsCompleted() >= 1">
                 <ng-template matStepLabel>Provide base data</ng-template>
-                <form>
+                <form data-cy="Step1">
                     <mat-form-field class="flex-1">
                         <mat-label>Social Security Number</mat-label>
-                        <input matInput placeholder="ex. 12345678">
+                        <input matInput placeholder="ex. 12345678" data-cy="SsnInput">
                     </mat-form-field>
                     <div class="mb-4">
-                        <mat-checkbox>Are you married?</mat-checkbox>
+                        <mat-checkbox data-cy="MarriedCheckbox">Are you married?</mat-checkbox>
                     </div>
                     <mat-form-field class="flex-1">
                         <mat-label>What is your address?</mat-label>
-                        <input matInput placeholder="ex. Rohan street 1">
+                        <input matInput placeholder="ex. Rohan street 1" data-cy="AddressInput">
                     </mat-form-field>
                     <mat-form-field class="flex-1">
                         <mat-label>How old are you?</mat-label>
-                        <input matInput placeholder="ex. 27" type="number">
+                        <input matInput placeholder="ex. 27" type="number" data-cy="AgeInput">
                     </mat-form-field>
                     <mat-form-field class="flex-1">
                         <mat-label>What is your birth city?</mat-label>
-                        <input matInput placeholder="ex. Warsaw">
+                        <input matInput placeholder="ex. Warsaw" data-cy="BirthCityInput">
                     </mat-form-field>
                     <mat-form-field class="flex-1">
                         <mat-label>What is your nationality?</mat-label>
-                        <input matInput placeholder="ex. Rohan citizen">
+                        <input matInput placeholder="ex. Rohan citizen" data-cy="NationalityInput">
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Favourite club?</mat-label>
-                        <mat-select>
+                        <mat-select data-cy="FavouriteClubSelect">
                             <mat-option value="c1">Arka Gdynia</mat-option>
-                            <mat-option value="c2">Radomiak Radom</mat-option>
+                            <mat-option value="c2" data-cy="RadomiakOption">Radomiak Radom</mat-option>
                             <mat-option value="c3">Legia</mat-option>
                             <mat-option value="c4">Barcelona</mat-option>
                             <mat-option value="c5">Real Madryt</mat-option>
@@ -42,16 +48,16 @@
                     </mat-form-field>
                     <mat-form-field>
                         <mat-label>Favourite language?</mat-label>
-                        <mat-select>
+                        <mat-select data-cy="FavouriteLanguage">
                             <mat-option value="c1">C#</mat-option>
                             <mat-option value="c2">JS</mat-option>
-                            <mat-option value="c3">TS</mat-option>
+                            <mat-option value="c3" data-cy="TsOption">TS</mat-option>
                             <mat-option value="c4">Java</mat-option>
                         </mat-select>
                     </mat-form-field>
                     <mat-form-field class="example-form-field">
                         <mat-label>Grunwald battle date?</mat-label>
-                        <input matInput [matDatepicker]="datepicker">
+                        <input matInput [matDatepicker]="datepicker" data-cy="GrunwaldDateInput">
                         <mat-hint>MM/DD/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="datepicker"></mat-datepicker-toggle>
                         <mat-datepicker #datepicker>
@@ -62,41 +68,65 @@
                         </mat-datepicker>
                       </mat-form-field>
                     <div>
-                        <button mat-flat-button color="primary" (click)="goNext()">Next</button>
+                        <button mat-flat-button color="primary" (click)="goNext()" data-cy="GoNextButton">Next</button>
                     </div>
                 </form>
             </mat-step>
             <mat-step [editable]="false" [completed]="stepsCompleted() >= 2">
                 <ng-template matStepLabel>Additional data</ng-template>
-                <form>
+                <form data-cy="Step2">
                     <mat-form-field class="flex-1">
                         <mat-label>Children count</mat-label>
-                        <input matInput placeholder="ex. 2">
+                        <input matInput placeholder="ex. 2" data-cy="ChildrenCountInput">
                     </mat-form-field>
                     <mat-form-field class="flex-1">
                         <mat-label>Cars count</mat-label>
-                        <input matInput placeholder="ex. 1">
+                        <input matInput placeholder="ex. 1" data-cy="CarsCountInput">
                     </mat-form-field>
+                    <div>
+                        <button mat-flat-button color="primary" matStepperNext (click)="goNext()" data-cy="GoNextButton">Next</button>
+                    </div>
                 </form>
-                <div>
-                    <button mat-flat-button color="primary" matStepperNext (click)="goNext()">Next</button>
-                </div>
             </mat-step>
             <mat-step [editable]="false" [completed]="stepsCompleted() >= 3">
                 <ng-template matStepLabel>Consents</ng-template>
-                <div *ngIf="!consentError()" class="mb-2" >
-                    <button mat-flat-button color="primary" [disabled]="consented()" (click)="submitConsent()">Approve Psd2 Consent</button>
+                <div data-cy="Step3">
+                    <div *ngIf="!consentError()" class="mb-2" >
+                        <button mat-flat-button color="primary" [disabled]="consented()" (click)="submitConsent()" data-cy="ApproveConsentButton">Approve Psd2 Consent</button>
+                        <div *ngIf="consented()"><i class="ri-verified-badge-line text-green-700"></i> Approved</div>
+                    </div>
+                    <div *ngIf="consentError()">
+                        <div class="text-lg text-gray-600 text-center" data-cy="ConsentError">
+                            <i class="ri-error-warning-line block text-6xl my-8"></i>
+                            There was an error with proceeding your consent. You can still continue.
+                        </div>
+                    </div>
+                    <button mat-flat-button color="primary" (click)="goNext()" data-cy="GoNextButton">Next</button>
                 </div>
-                <div *ngIf="consentError()">
-                    <div class="text-lg text-gray-600 text-center"><i class="ri-error-warning-line block text-6xl my-8"></i> There was an error with proceeding your consent. You can still continue.</div>
-                </div>
-                <button mat-flat-button color="primary" (click)="goNext()">Next</button>
             </mat-step>
             <mat-step [editable]="false">
                 <ng-template matStepLabel>Finalize</ng-template>
-                <div class="text-lg text-gray-600 text-center"><i class="ri-verified-badge-line block text-6xl my-8"></i> Thank you for filling your data. We will contact you soon.</div>
+                <div
+                    *ngIf="!finalized()"
+                    class="h-32 flex justify-center items-center"
+                >
+                    <mat-spinner></mat-spinner>
+                </div>
+                <div
+                    class="text-lg text-gray-600 text-center"
+                    data-cy="FinalizeText"
+                    *ngIf="finalized() && !finalizedError()"                 
+                >
+                    <i class="ri-verified-badge-line block text-6xl my-8"></i>
+                    Thank you for filling your data. We will contact you soon.
+                </div>
+                <div *ngIf="finalizedError()">
+                    <div class="text-lg text-gray-600 text-center" data-cy="ConsentError">
+                        <i class="ri-error-warning-line block text-6xl my-8"></i>
+                        There was an error when calculating budget for your case.
+                    </div>
+                </div>
             </mat-step>
         </mat-vertical-stepper>
     </div>
 </div>
- n 

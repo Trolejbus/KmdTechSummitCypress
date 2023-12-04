@@ -7,11 +7,16 @@ const host = process.env.HOST ?? 'localhost';
 const port = process.env.PORT ? Number(process.env.PORT) : 3000;
 
 const app = express();
-const applications: ApplicationDto[] = [];
+let applications: ApplicationDto[] = [];
 
 app.use(cors({
   origin: '*'
 }));
+
+app.post('/reset', (req, res) => {
+  applications = [];
+  res.end();
+});
 
 app.get('/', (req, res) => {
   res.send({ message: 'Hello API' });
@@ -43,6 +48,10 @@ app.put('/applications/:id', (req, res) => {
 
 app.put('/applications/:id/init3rdParty', (req, res) => {
   res.end();
+});
+
+app.put('/applications/:id/finalize', (req, res) => {
+  setTimeout(() => { res.end() }, 2000);
 });
 
 app.listen(port, host, () => {

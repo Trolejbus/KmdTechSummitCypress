@@ -45,8 +45,10 @@ export class ApplicantAppComponent implements OnInit {
   public stepsCompleted = signal(0);
   public loading = signal(true);
   public error = signal(false);
-  public consentError = signal(true);
+  public consentError = signal(false);
   public consented = signal(false);
+  public finalized = signal(false);
+  public finalizedError = signal(false);
   
   @ViewChild('stepper')
   public stepper!: MatStepper;
@@ -73,6 +75,23 @@ export class ApplicantAppComponent implements OnInit {
     }
     catch {
       this.consentError.set(true);
+    }
+  }
+
+  public async selectedIndexChange(index: number): Promise<void> {
+    if (index !== 3) {
+      return;
+    }
+
+    try {
+      const params = await firstValueFrom(this.route.params);
+      await firstValueFrom(this.service.finalize(params["id"]));
+    }
+    catch {
+      this.finalizedError.set(true);
+    }
+    finally {
+      this.finalized.set(true);
     }
   }
 

@@ -20,4 +20,8 @@ export class ApplicantAppService {
     public init3rdParty(id: number): Observable<void> {
         return this.httpClient.put<void>(`http://localhost:3000/applications/${id}/init3rdParty`, null);
     }
+
+    public finalize(id: number): Observable<void> {
+        return this.httpClient.put<void>(`http://localhost:3000/applications/${id}/finalize`, null);
+    }
 }
