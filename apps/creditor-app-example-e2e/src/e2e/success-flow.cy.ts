@@ -1,20 +1,29 @@
 describe('Test Success flow', () => {
   it('Test success flow', () => {
-    cy.request('POST', 'http://localhost:3000/reset');
 
-    cy.visit('http://localhost:4200/creditor-app');
-    cy.get('[data-cy=AddButton]').click();
+    cy.step('Clear previous data', () => {
+      cy.request('POST', 'http://localhost:3000/reset');
+    });
 
-    cy.get('[data-cy=ReferenceNo]').type('000-0001', { force: true });
-    cy.get('[data-cy=ApplicantName]').type('John', { force: true });
-    cy.get('[data-cy=ApplicantSurname]').type('Doe', { force: true });
-    cy.get('[data-cy=ApplicantPhone]').type('678 123 456', { force: true });
-    cy.get('[data-cy=ApplicantEmail]').type('test@example.com', { force: true });
-    cy.get('[data-cy=LoanAmount]').type('2000000', { force: true });
-    cy.get('[data-cy=MonthlyPaymentAmount]').type('3000', { force: true });
-    cy.get('[data-cy=InitialPayment]').type('60000', { force: true });
-    cy.get('[data-cy=RentCheckbox] input').click();
-    cy.get('[data-cy=SubmitButton]').click();
+    cy.step('Navigate to Application Form', () => {
+      cy.visit('http://localhost:4200/creditor-app');
+      cy.get('[data-cy=AddButton]').click();
+    })
+
+    cy.step('Fill And Submit Form', () => {
+      cy.get('[data-cy=ReferenceNo]').type('000-0001', { force: true });
+      cy.get('[data-cy=ApplicantName]').type('John', { force: true });
+      cy.get('[data-cy=ApplicantSurname]').type('Doe', { force: true });
+      cy.get('[data-cy=ApplicantPhone]').type('678 123 456', { force: true });
+      cy.get('[data-cy=ApplicantEmail]').type('test@example.com', { force: true });
+      cy.get('[data-cy=LoanAmount]').type('2000000', { force: true });
+      cy.get('[data-cy=MonthlyPaymentAmount]').type('3000', { force: true });
+      cy.get('[data-cy=InitialPayment]').type('60000', { force: true });
+      cy.get('[data-cy=RentCheckbox] input').click();
+      cy.get('[data-cy=SubmitButton]').click();
+    });
+
+    
 
     cy.get('[data-cy=CreditorDashboard]').should('be.visible');
     cy.get('[data-cy=CaseEntry]').should('have.length', 1);

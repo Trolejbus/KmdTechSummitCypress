@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -12,22 +13,32 @@
 declare namespace Cypress {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface Chainable<Subject> {
-    login(email: string, password: string): void;
+    step<T>(message: string, fn: () => void | Cypress.Chainable<T>): Cypress.Chainable<T>;
   }
 }
-//
-// -- This is a parent command --
-Cypress.Commands.add('login', (email, password) => {
-  console.log('Custom command example: Login', email, password);
+
+Cypress.Commands.add('step', (message, fn) => {
+  Cypress.log({
+    name: '🖐️ Step - ',
+    message: `${message}`,
+    groupStart: true,
+  } as any);
+
+  const result = fn();
+  cy.wrap(result).then(() => endGroup());
 });
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+
+function endGroup() {
+  collapseLastGroup()
+  Cypress.log({ groupEnd: true, emitOnly: true } as any);
+}
+
+function collapseLastGroup() {
+  const openExpanders = window.top!.document.getElementsByClassName(
+    'command-expander-is-open',
+  )
+  const numExpanders = openExpanders.length
+  const el = openExpanders[numExpanders - 1]
+
+  if (el) el.parentElement!.click()
+}
